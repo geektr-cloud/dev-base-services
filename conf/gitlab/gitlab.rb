@@ -1,5 +1,8 @@
 external_url 'https://git.geektr.cloud'
 
+nginx['listen_port'] = 80
+nginx['listen_https'] = false
+
 gitlab_rails['internal_api_url'] = 'https://git.geektr.cloud'
 
 nginx['custom_error_pages'] = {
