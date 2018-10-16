@@ -13,6 +13,7 @@ services:
     environment:
       - ACME_AGREE=true
     volumes:
+      - "caddy-storage:/root/.caddy:rw"
       - "$service_dir/conf/caddy/Caddyfile:/etc/Caddyfile:ro"
       - "$data_dir/logs/caddy:/logs:rw"
     ports:
@@ -27,3 +28,5 @@ services:
       - '$service_dir/conf/gitlab:/etc/gitlab'
       - '$data_dir/logs/gitlab:/var/log/gitlab'
       - '$data_dir/gitlab:/var/opt/gitlab'
+volumes:
+  caddy-storage:
