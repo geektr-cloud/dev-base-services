@@ -1,0 +1,29 @@
+version: '3'
+services:
+  frp_client:
+    image: geektr/frp
+    restart: always
+    env_file:
+      - "$secrets_dir/frp/frp.env"
+    volumes:
+      - "$service_dir/conf/frp/frpc.ini:/etc/frp/frpc.ini:ro"
+  caddy:
+    image: abiosoft/caddy
+    restart: always
+    environment:
+      - ACME_AGREE=true
+    volumes:
+      - "$service_dir/conf/caddy/Caddyfile:/etc/Caddyfile:ro"
+      - "$data_dir/logs/caddy:/logs:rw"
+    ports:
+      - "$dev_server_ip:80:80"
+      - "$dev_server_ip:443:443"
+  gitlab:
+    image: 'gitlab/gitlab-ce:latest'
+    restart: always
+    ports:
+      - '$dev_server_ip:22:22'
+    volumes:
+      - '$service_dir/conf/gitlab:/etc/gitlab'
+      - '$data_dir/logs/gitlab:/var/log/gitlab'
+      - '$data_dir/gitlab:/var/opt/gitlab'

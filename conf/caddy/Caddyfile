@@ -1,0 +1,7 @@
+git.geektr.cloud {
+    tls geektheripper@gmail.com
+    proxy / gitlab {
+        transparent
+        websocket
+    }
+}
