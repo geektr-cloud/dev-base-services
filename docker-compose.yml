@@ -24,8 +24,10 @@ services:
     restart: always
     ports:
       - '$dev_server_ip:22:22'
+    env_file:
+      - "$secrets_dir/gitlab/gitlab.env"
     volumes:
-      - '$service_dir/conf/gitlab:/etc/gitlab'
+      - '$data_dir/gitlab-conf:/etc/gitlab'
       - '$data_dir/logs/gitlab:/var/log/gitlab'
       - '$data_dir/gitlab:/var/opt/gitlab'
 volumes:
