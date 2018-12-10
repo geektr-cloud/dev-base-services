@@ -1,8 +1,5 @@
 storage: ./storage
 
-listen:
-  - 0.0.0.0:80
-
 auth:
   gitlab:
     url: https://git.geektr.cloud
@@ -11,7 +8,7 @@ web:
   enable: true
   title: GNPM
   # logo: gnpm.png
-  scope: \@geektr-local
+  scope: \@geektr.cloud
 
 uplinks:
   npmjs:
@@ -19,10 +16,10 @@ uplinks:
     cache: false
 
 packages:
-  '@geektr-local/*':
+  '@geektr.cloud/*':
     access: $all
     publish: $authenticated
-  '@geektr-private/*':
+  '@private.geektr.cloud/*':
     access: $authenticated
     publish: $authenticated
   '**':

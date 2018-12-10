@@ -29,19 +29,19 @@ reload caddy
 
 ```bash
 # directly pull pkgs
-npm install @geektr-local/example --registry=https://npm.geektr.cloud
-npm install @geektr-private/example --registry=https://npm.geektr.cloud
+npm install @geektr.cloud/example --registry=https://npm.geektr.cloud
+npm install @private.geektr.cloud/example --registry=https://npm.geektr.cloud
 
 # normal usage
-npm set @geektr-local:registry https://npm.geektr.cloud
-npm set @geektr-private:registry https://npm.geektr.cloud
+npm set @geektr.cloud:registry https://npm.geektr.cloud
+npm set @private.geektr.cloud:registry https://npm.geektr.cloud
 npm adduser --registry https://npm.geektr.cloud
 npm publish --registry https://npm.geektr.cloud
 
 # ci enviroment
 tee -a $(npm config get userconfig) <<EOF
-@geektr-local:registry=https://npm.geektr.cloud
-@geektr-private:registry=https://npm.geektr.cloud
+@geektr.cloud:registry=https://npm.geektr.cloud
+@private.geektr.cloud:registry=https://npm.geektr.cloud
 //npm.geektr.cloud/:_authToken="$GNPM_AUTH_TOKEN"
 EOF
 
