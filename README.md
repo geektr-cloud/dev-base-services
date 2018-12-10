@@ -18,7 +18,39 @@ deployer up geektr-cloud/dev-server
 
 ## Other Operation
 
+reload caddy
+
 ```bash
 # reload web server
 ./caddy-reload.sh
+```
+
+### npm usage
+
+```bash
+# directly pull pkgs
+npm install @geektr-local/example --registry=https://npm.geektr.cloud
+npm install @geektr-private/example --registry=https://npm.geektr.cloud
+
+# normal usage
+npm set @geektr-local:registry https://npm.geektr.cloud
+npm set @geektr-private:registry https://npm.geektr.cloud
+npm adduser --registry https://npm.geektr.cloud
+npm publish --registry https://npm.geektr.cloud
+
+# ci enviroment
+tee -a $(npm config get userconfig) <<EOF
+@geektr-local:registry=https://npm.geektr.cloud
+@geektr-private:registry=https://npm.geektr.cloud
+//npm.geektr.cloud/:_authToken="$GNPM_AUTH_TOKEN"
+EOF
+
+# write alias in .bashrc / .zshrc
+alias gnpm="npm --registry=https://npm.geektr.cloud \
+  --cache=$HOME/.npm/.cache/gnpm \
+  --userconfig=$HOME/.gnpmrc"
+
+alias garn="yarn --registry=https://npm.geektr.cloud \
+  --cache-folder=$HOME/.npm/.cache/garn \
+  --use-yarnrc=$HOME/.garnrc"
 ```
