@@ -30,5 +30,11 @@ services:
       - '$data_dir/gitlab-conf:/etc/gitlab'
       - '$data_dir/logs/gitlab:/var/log/gitlab'
       - '$data_dir/gitlab:/var/opt/gitlab'
+  verdaccio:
+    image: geektrcloud/verdaccio
+    volumes:
+      - '$service_dir/conf/verdaccio:/verdaccio/conf:ro'
+      - 'verdaccio-storage:/verdaccio/storage'
 volumes:
   caddy-storage:
+  verdaccio-storage:

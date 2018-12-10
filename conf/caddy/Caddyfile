@@ -5,3 +5,11 @@ git.geektr.cloud {
         websocket
     }
 }
+
+npm.geektr.cloud {
+    tls geektheripper@gmail.com
+    proxy / verdaccio:4873 {
+        transparent
+        websocket
+    }
+}
