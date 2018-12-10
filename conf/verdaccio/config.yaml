@@ -1,4 +1,4 @@
-storage: ./storage
+storage: /verdaccio/storage
 
 auth:
   gitlab:
