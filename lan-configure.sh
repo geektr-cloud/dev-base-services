@@ -15,3 +15,5 @@ add address=10.3.1.2 name=dev-server.geektr.cloud
 add address=10.3.1.2 name=git.geektr.cloud
 # verdaccio
 add address=10.3.1.2 name=npm.geektr.cloud
+# docker registry
+add address=10.3.1.2 name=docker-registry.geektr.cloud

@@ -12,6 +12,8 @@ services:
     restart: always
     environment:
       - ACME_AGREE=true
+    env_file:
+      - "$secrets_dir/docker-registry/registry.env"
     volumes:
       - "caddy-storage:/root/.caddy:rw"
       - "$service_dir/conf/caddy/Caddyfile:/etc/Caddyfile:ro"
@@ -35,6 +37,13 @@ services:
     volumes:
       - '$service_dir/conf/verdaccio:/verdaccio/conf:ro'
       - 'verdaccio-storage:/verdaccio/storage'
+  docker-registry:
+    image: registry:2
+    restart: always
+    volumes:
+      - 'docker-registry-storage:/var/lib/registry'
+
 volumes:
   caddy-storage:
   verdaccio-storage:
+  docker-registry-storage:

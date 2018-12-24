@@ -1,2 +1,3 @@
 git.geektr.cloud.	600	IN	CNAME	dev.geektr.cloud.
 npm.geektr.cloud.	600	IN	CNAME	dev.geektr.cloud.
+docker-registry.geektr.cloud.	600	IN	CNAME dev.geektr.cloud.

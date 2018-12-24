@@ -13,3 +13,13 @@ npm.geektr.cloud {
         websocket
     }
 }
+
+docker-registry.geektr.cloud {
+    tls geektheripper@gmail.com
+    basicauth /v2 "geektr" "{$DOCKER_REGISTRY_GEEKTR_PASSWD}"
+    basicauth /v2 "yumemi" "{$DOCKER_REGISTRY_YUMEMI_PASSWD}"
+    proxy /v2 docker-registry:5000 {
+        transparent
+        header_upstream Docker-Distribution-Api-Version "registry/2.0"
+    }
+}
