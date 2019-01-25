@@ -36,6 +36,7 @@ services:
     image: geektrcloud/verdaccio
     volumes:
       - '$service_dir/conf/verdaccio:/verdaccio/conf:ro'
+      - '$service_dir/conf/verdaccio/logo.svg:/usr/local/app/static/logo.svg:ro'
       - 'verdaccio-storage:/verdaccio/storage'
   docker-registry:
     image: registry:2

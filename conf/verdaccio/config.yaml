@@ -6,8 +6,8 @@ auth:
     publish: $maintainer
 web:
   enable: true
-  title: GNPM
-  # logo: gnpm.png
+  title: GeekTR.Cloud Node Package Manager
+  logo: /-/static/logo.svg
   scope: \@geektr.cloud
 
 uplinks:
