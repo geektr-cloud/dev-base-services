@@ -1,3 +1,7 @@
+# Deprecated!!!
+
+project moved to [github](https://github.com/geektr-cloud/dev-base-services)
+
 # dev-server
 
 this project deployed via [geektr-cloud/deployer](https://github.com/geektr-cloud/deployer)
