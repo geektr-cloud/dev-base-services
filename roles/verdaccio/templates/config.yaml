@@ -1,0 +1,47 @@
+storage: /verdaccio/storage/data
+plugins: /verdaccio/plugins
+
+auth:
+  gitlab:
+    url: https://git.geektr.co
+
+web:
+  enable: true
+  title: GeekTR Node Package Manager
+  scope: '@geektr.co'
+  logo: logo.svg
+
+security:
+  api:
+    jwt:
+      sign:
+        expiresIn: 60d
+        notBefore: 1
+  web:
+    sign:
+      expiresIn: 7d
+      notBefore: 1
+
+uplinks:
+  npmjs:
+    url: http://registry.npm.taobao.org/
+    cache: false
+
+packages:
+  '@geektr.co/*':
+    access: $all
+    publish: $authenticated
+  '@private.geektr.co/*':
+    access: $authenticated
+    publish: $authenticated
+  '**':
+    access: $all
+    publish: $authenticated
+    proxy: npmjs
+
+middlewares:
+  audit:
+    enabled: true
+
+logs:
+  - {type: stdout, format: pretty, level: http}

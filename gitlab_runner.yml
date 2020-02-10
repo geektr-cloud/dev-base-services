@@ -1,0 +1,32 @@
+- hosts: runner-01.dev-base-services.geektr.co
+  remote_user: yumemi
+  become: yes
+  become_user: root
+
+  vars_files:
+    - "secret_vars/dev-server.yml"
+
+  roles:
+    - role: riemers.gitlab-runner
+      vars:
+        gitlab_runner_package_name: gitlab-runner
+        gitlab_runner_concurrent: 10
+        gitlab_runner_coordinator_url: https://git.{{ service_domain }}/
+        gitlab_runner_registration_token: "{{ gitlab_runner_token }}"
+        gitlab_runner_runners:
+          - name: 'runner-01'
+            executor: docker
+            docker_image: docker
+            tags:
+              - docker
+            docker_privileged: true
+            docker_volumes:
+              - "/var/run/docker.sock:/var/run/docker.sock"
+            cache_type: s3
+            cache_path: cache
+            cache_shared: true
+            cache_s3_server_address: minio.geektr.co
+            cache_s3_access_key: "{{ gitlab_minio_access_key }}"
+            cache_s3_secret_key: "{{ gitlab_minio_secret_key }}"
+            cache_s3_bucket_name: gitlab-runner
+            cache_s3_bucket_location: ""

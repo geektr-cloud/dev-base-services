@@ -1,0 +1,31 @@
+- name: ensure caddy diectory exists
+  tags: init
+  file:
+    path: "{{ caddy.project_path }}"
+    state: directory
+
+- name: ensure volumes created
+  tags: init
+  docker_volume:
+    name: "{{ item.value }}"
+  with_dict: "{{ caddy.volumes }}"
+
+- name: transfer docker-compose.yml
+  tags: update
+  template:
+    src: "docker-compose.yml"
+    dest: "{{ caddy.project_path }}/docker-compose.yml"
+
+- name: transfer config files
+  tags: update
+  template:
+    src: "Caddyfile"
+    dest: "{{ caddy.project_path }}/Caddyfile"
+  register: caddyfile_transfer
+
+- name: restart caddy
+  tags: update
+  docker_compose:
+    project_src: "{{ caddy.project_path }}"
+    pull: yes
+    restarted: yes

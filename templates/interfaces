@@ -1,0 +1,14 @@
+source /etc/network/interfaces.d/*
+
+auto lo
+iface lo inet loopback
+
+auto ens192
+iface ens192 inet static
+    address {{ host_ip }}/24
+    gateway 10.2.1.1
+
+auto ens224
+iface ens224 inet static
+    address {{ service_ip }}/24
+    gateway 10.0.0.1

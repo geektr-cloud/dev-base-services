@@ -1,0 +1,4 @@
+verdaccio:
+  project_path: "{{ deploy_directory }}/verdaccio"
+  volumes:
+    storage: "{{ docker_naming_space }}_verdaccio_storage"

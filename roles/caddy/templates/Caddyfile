@@ -1,0 +1,22 @@
+git.{{ service_domain }} {
+    tls geektheripper@gmail.com
+    proxy / gitlab {
+        transparent
+        websocket
+    }
+}
+
+npm.{{ service_domain }} {
+    tls geektheripper@gmail.com
+    proxy / verdaccio:4873 {
+        transparent
+        websocket
+    }
+}
+
+registry.{{ service_domain }} {
+    tls geektheripper@gmail.com
+    proxy / gitlab:5001 {
+        transparent
+    }
+}

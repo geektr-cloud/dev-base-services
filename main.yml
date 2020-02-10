@@ -1,0 +1,73 @@
+- hosts: dev-base-services.geektr.co
+  remote_user: yumemi
+
+  vars_files:
+    - "secret_vars/dev-server.yml"
+
+  pre_tasks:
+    - name: configure sshd port
+      become: yes
+      become_user: root
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '#?\W*ListenAddress'
+        line: 'ListenAddress {{ host_ip }}'
+      register: sshd_configure
+
+    - name: reload sshd
+      become: yes
+      become_user: root
+      systemd:
+        state: reloaded
+        name: sshd
+      when: sshd_configure.changed
+
+    - name: configure service network interface
+      become: yes
+      become_user: root
+      template:
+        src: "interfaces"
+        dest: "/etc/network/interfaces"
+      register: interface_configure
+    
+    - name: reboot vm
+      become: yes
+      become_user: root
+      reboot:
+      when: interface_configure.changed
+
+    - name: install pip
+      become: yes
+      become_user: root
+      apt:
+        name: python-pip
+        update_cache: yes
+
+    - name: install docker sdk
+      become: yes
+      become_user: root
+      pip:
+        name:
+         - docker
+         - docker-compose
+
+    - name: dirty fix backports issue
+      become: yes
+      become_user: root
+      command: cp -r /usr/local/lib/python2.7/dist-packages/backports/ssl_match_hostname/ /usr/lib/python2.7/dist-packages/backports
+
+    - name: ensure applications diectory exists
+      tags: init
+      file:
+        path: "{{ deploy_directory }}"
+        state: directory
+
+    - name: ensure docker network
+      tags: init
+      docker_network:
+        name: "{{ docker_network_name }}"
+
+  roles:
+    - role: gitlab
+    - role: verdaccio
+    - role: caddy

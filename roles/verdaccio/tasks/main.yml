@@ -1,0 +1,28 @@
+- name: ensure verdaccio diectory exists
+  tags: init
+  file:
+    path: "{{ verdaccio.project_path }}"
+    state: directory
+
+- name: ensure volumes created
+  tags: init
+  docker_volume:
+    name: "{{ item.value }}"
+  with_dict: "{{ verdaccio.volumes }}"
+
+- name: transfer config file
+  tags: update
+  template:
+    src: "{{ item }}"
+    dest: "{{ verdaccio.project_path }}/{{ item }}"
+  with_items:
+    - config.yaml
+    - logo.svg
+    - docker-compose.yml
+
+- name: restart verdaccio
+  tags: update
+  docker_compose:
+    project_src: "{{ verdaccio.project_path }}"
+    pull: yes
+    restarted: yes

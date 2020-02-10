@@ -1,0 +1,28 @@
+version: '3'
+services:
+  caddy:
+    container_name: caddy
+    image: geektrcloud/caddy
+    restart: unless-stopped
+    environment:
+      - ACME_AGREE=true
+    volumes:
+      - "data:/root/.caddy:rw"
+      - "logs:/logs:rw"
+      - "{{ caddy.project_path }}/Caddyfile:/etc/Caddyfile:ro"
+    ports:
+      - "{{ service_ip }}:80:80"
+      - "{{ service_ip }}:443:443"
+
+networks:
+  default:
+    external:
+      name: '{{ docker_network_name }}'
+
+volumes:
+  data:
+    external:
+      name: '{{ caddy.volumes.data }}'
+  logs:
+    external:
+      name: '{{ caddy.volumes.logs }}'

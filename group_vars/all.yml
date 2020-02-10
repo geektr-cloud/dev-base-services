@@ -1,0 +1,9 @@
+host_ip: 10.2.1.10
+
+service_ip: 10.0.0.4
+service_domain: "geektr.co"
+
+deploy_directory: "/srv/geektr.co"
+
+docker_naming_space: "dev_base"
+docker_network_name: "{{ docker_naming_space }}_services"

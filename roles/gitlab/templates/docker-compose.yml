@@ -1,0 +1,28 @@
+version: '3'
+services:
+  gitlab:
+    container_name: gitlab
+    image: 'gitlab/gitlab-ce:latest'
+    restart: unless-stopped
+    ports:
+      - '{{ service_ip }}:22:22'
+    volumes:
+      - 'conf:/etc/gitlab/'
+      - 'logs:/var/log/gitlab'
+      - 'data:/var/opt/gitlab'
+
+networks:
+  default:
+    external:
+      name: '{{ docker_network_name }}'
+
+volumes:
+  conf:
+    external:
+      name: '{{ gitlab.volumes.conf }}'
+  logs:
+    external:
+      name: '{{ gitlab.volumes.logs }}'
+  data:
+    external:
+      name: '{{ gitlab.volumes.data }}'

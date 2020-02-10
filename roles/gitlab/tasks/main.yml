@@ -1,0 +1,39 @@
+- name: ensure gitlab diectory exists
+  tags: init
+  file:
+    path: "{{ gitlab.project_path }}"
+    state: directory
+
+- name: ensure volumes created
+  tags: init
+  docker_volume:
+    name: "{{ item.value }}"
+  with_dict: "{{ gitlab.volumes }}"
+
+- name: transfer config file
+  tags: update
+  template:
+    src: "{{ item }}"
+    dest: "{{ gitlab.project_path }}/{{ item }}"
+  with_items:
+    - gitlab.rb
+    - docker-compose.yml
+
+- name: create temp container and copy config file into conf volume
+  tags: update
+  docker_container:
+    name: temp-container
+    image: alpine
+    auto_remove: yes
+    detach: no
+    command: "cp /gitlab.rb /data/gitlab.rb"
+    volumes:
+      - "{{ gitlab.project_path }}/gitlab.rb:/gitlab.rb"
+      - "{{ gitlab.volumes.conf }}:/data"
+
+- name: restart gitlab
+  tags: update
+  docker_compose:
+    project_src: "{{ gitlab.project_path }}"
+    pull: yes
+    restarted: yes

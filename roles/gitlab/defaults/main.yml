@@ -1,0 +1,6 @@
+gitlab:
+  project_path: "{{ deploy_directory }}/gitlab"
+  volumes:
+    conf: "{{ docker_naming_space }}_gitlab_conf"
+    logs: "{{ docker_naming_space }}_gitlab_logs"
+    data: "{{ docker_naming_space }}_gitlab_data"

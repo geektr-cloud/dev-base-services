@@ -1,0 +1,5 @@
+caddy:
+  project_path: "{{ deploy_directory }}/caddy"
+  volumes:
+    logs: "{{ docker_naming_space }}_caddy_logs"
+    data: "{{ docker_naming_space }}_caddy_data"
