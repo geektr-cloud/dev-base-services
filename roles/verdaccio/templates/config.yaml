@@ -1,9 +1,18 @@
 storage: /verdaccio/storage/data
 plugins: /verdaccio/plugins
 
+middlewares:
+  gitlab-oauth:
+    enabled: true
+  audit:
+    enabled: true
+
 auth:
-  gitlab:
-    url: https://git.geektr.co
+  gitlab-oauth:
+    group: {{ verdaccio_gitlab_group }}
+    client-id: {{ verdaccio_gitlab_client_id }}
+    client-secret: {{ verdaccio_gitlab_client_secret }}
+    gitlab-host: https://git.{{ service_domain }}
 
 web:
   enable: true
@@ -38,10 +47,6 @@ packages:
     access: $all
     publish: $authenticated
     proxy: npmjs
-
-middlewares:
-  audit:
-    enabled: true
 
 logs:
   - {type: stdout, format: pretty, level: http}
